@@ -11,9 +11,9 @@ import com.duyts.feature_mymodule.MyModelScreen
 
 @Composable
 fun MainNavigation() {
-    val navController = rememberNavController()
+	val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "main") {
-        composable("main") { MyModelScreen(modifier = Modifier.padding(16.dp)) }
-    }
+	NavHost(navController = navController, startDestination = "main") {
+		composable("main") { MyModelScreen(modifier = Modifier.padding(16.dp)) }
+	}
 }
