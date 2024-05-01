@@ -56,6 +56,8 @@ android {
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":feature-mymodel"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:setting"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)

@@ -17,28 +17,41 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import com.duyts.core.ui.component.AppNavigationBar
 import com.duyts.core.ui.component.AppNavigationBarItem
+import com.duyts.realestate.AppState
 import com.duyts.realestate.navigation.TopLevelDestination
 
 @Composable
-fun MainApp(modifier: Modifier = Modifier) {
+fun MainApp(appState: AppState, modifier: Modifier = Modifier) {
 	Surface(
 		modifier = Modifier.fillMaxSize(),
 		color = MaterialTheme.colorScheme.background
 	) {
-		MainAppUi()
+		MainAppUi(
+			appState = appState,
+		)
 	}
 }
 
 @Composable
-internal fun MainAppUi() {
+internal fun MainAppUi(
+	appState: AppState
+) {
 	Scaffold(
 		modifier = Modifier,
 		containerColor = Color.Transparent,
 		contentColor = MaterialTheme.colorScheme.onBackground,
 		contentWindowInsets = WindowInsets(0, 0, 0, 0),
-		bottomBar = { MainAppBottomBar(TopLevelDestination.entries) }
+		bottomBar = {
+			MainAppBottomBar(
+				destinations = appState.topLevelDestinations,
+				currentDestination = null,
+				onNavigateToDestination = appState::navigateToTopLevelDestination,
+			)
+		}
 	) { padding ->
 		Row(
 			Modifier
@@ -49,7 +62,7 @@ internal fun MainAppUi() {
 					WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
 				)
 		) {
-
+			NavHost(appState = appState)
 		}
 	}
 }
@@ -57,18 +70,21 @@ internal fun MainAppUi() {
 @Composable
 internal fun MainAppBottomBar(
 	destinations: List<TopLevelDestination>,
-	modifier: Modifier = Modifier
+	currentDestination: NavDestination?,
+	onNavigateToDestination: (TopLevelDestination) -> Unit,
+	modifier: Modifier = Modifier,
 ) {
 	AppNavigationBar(modifier = modifier) {
-		destinations.forEach { item ->
+		destinations.forEach { dest ->
+			val selected = currentDestination.isTopLevelDestinationInHierarchy(dest)
 			AppNavigationBarItem(
-				selected = false,
-				onClick = {},
+				selected = selected,
+				onClick = { onNavigateToDestination(dest) },
 				icon = {
-					Icon(imageVector = item.unselectedIcon, contentDescription = null)
+					Icon(imageVector = dest.unselectedIcon, contentDescription = null)
 				},
 				selectedIcon = {
-					Icon(imageVector = item.selectedIcon, contentDescription = null)
+					Icon(imageVector = dest.selectedIcon, contentDescription = null)
 				},
 				label = {
 					Text(text = "This is label")
@@ -78,3 +94,8 @@ internal fun MainAppBottomBar(
 
 	}
 }
+
+private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
+	this?.hierarchy?.any {
+		it.route?.contains(destination.name, true) ?: false
+	} ?: false

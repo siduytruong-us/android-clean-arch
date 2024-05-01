@@ -2,6 +2,7 @@ package com.duyts.realestate.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.duyts.core.ui.icon.AppIcon
+import kotlin.enums.enumEntries
 
 enum class TopLevelDestination(
 	val selectedIcon: ImageVector,
