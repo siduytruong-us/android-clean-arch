@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.duyts.feature.home.navigation.HOME_ROUTE
 import com.duyts.feature.home.navigation.navigateToHome
+import com.duyts.feature.login.navigation.navigateToLogin
 import com.duyts.feature.setting.navigation.navigateToSetting
 import com.duyts.realestate.navigation.TopLevelDestination
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +55,7 @@ class AppState(coroutineScope: CoroutineScope, val navController: NavHostControl
 		when (topLevelDestination) {
 			TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
 			TopLevelDestination.SETTINGS -> navController.navigateToSetting(topLevelNavOptions)
-			TopLevelDestination.FAVORITE -> TODO()
+			TopLevelDestination.FAVORITE -> navController.navigateToLogin(topLevelNavOptions)
 		}
 
 	}

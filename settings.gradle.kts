@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Real Estate"
 include(":app")
-include(":feature-mymodel")
 include(":core")
 include(":core:data")
 include(":core:common")
@@ -26,3 +25,5 @@ include(":core:ui")
 include(":feature")
 include(":feature:home")
 include(":feature:setting")
+include(":feature:login")
+include(":feature:maps")

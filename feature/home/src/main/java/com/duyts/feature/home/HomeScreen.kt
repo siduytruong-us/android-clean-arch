@@ -2,10 +2,13 @@ package com.duyts.feature.home
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 
 
 @Composable
-internal fun HomeRoute() {
+internal fun HomeRoute(
+	viewModel: HomeViewModel = hiltViewModel()
+) {
 	HomeScreen()
 }
 
